@@ -232,7 +232,7 @@ namespace Newtonsoft.Json.Utilities
             if (nonPublic)
                 bindingFlags = bindingFlags | BindingFlags.NonPublic;
 
-            return t.GetConstructors(bindingFlags).SingleOrDefault(c => !c.GetParameters().Any());
+            return t.GetConstructors(bindingFlags).FirstOrDefault(c => !c.GetParameters().Any());
         }
 
         public static bool IsNullable(Type t)

@@ -143,7 +143,7 @@ namespace Newtonsoft.Json.Serialization
         /// Gets or sets the default members search flags.
         /// </summary>
         /// <value>The default members search flags.</value>
-        [ObsoleteAttribute("DefaultMembersSearchFlags is obsolete. To modify the members serialized inherit from DefaultContractResolver and override the GetSerializableMembers method instead.")] 
+        [ObsoleteAttribute("DefaultMembersSearchFlags is obsolete. To modify the members serialized inherit from DefaultContractResolver and override the GetSerializableMembers method instead.")]
         public BindingFlags DefaultMembersSearchFlags { get; set; }
 #else
         private BindingFlags DefaultMembersSearchFlags = BindingFlags.Instance | BindingFlags.Public;
@@ -572,12 +572,7 @@ namespace Newtonsoft.Json.Serialization
 
         private ConstructorInfo GetParametrizedConstructor(Type objectType)
         {
-            IList<ConstructorInfo> constructors = objectType.GetConstructors(BindingFlags.Public | BindingFlags.Instance).ToList();
-
-            if (constructors.Count == 1)
-                return constructors[0];
-            else
-                return null;
+            return objectType.GetConstructors(BindingFlags.Public | BindingFlags.Instance).FirstOrDefault();
         }
 
         /// <summary>
@@ -1205,12 +1200,12 @@ namespace Newtonsoft.Json.Serialization
 
             bool hasJsonIgnoreAttribute =
                 JsonTypeReflector.GetAttribute<JsonIgnoreAttribute>(attributeProvider) != null
-                    // automatically ignore extension data dictionary property if it is public
+                // automatically ignore extension data dictionary property if it is public
                 || JsonTypeReflector.GetAttribute<JsonExtensionDataAttribute>(attributeProvider) != null
 #if !(NETFX_CORE || PORTABLE40 || PORTABLE)
-                || JsonTypeReflector.GetAttribute<NonSerializedAttribute>(attributeProvider) != null
+ || JsonTypeReflector.GetAttribute<NonSerializedAttribute>(attributeProvider) != null
 #endif
-                ;
+;
 
             if (memberSerialization != MemberSerialization.OptIn)
             {
@@ -1325,4 +1320,5 @@ namespace Newtonsoft.Json.Serialization
             return ResolvePropertyName(propertyName);
         }
     }
+
 }
